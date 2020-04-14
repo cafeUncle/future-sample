@@ -33,7 +33,7 @@ public class SupplyAsyncCase {
             System.out.println("future accept一下！" + result);
         }).join();
 
-//        future.get(); // 用get可以指定超时参数
+//        future.get(); // 用get可以指定超时参数 join只能阻塞主线程
 
         System.out.println("main线程结束了！" + completableFuture.get());
     }
