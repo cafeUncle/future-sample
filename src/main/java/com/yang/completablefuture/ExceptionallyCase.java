@@ -1,11 +1,14 @@
 package com.yang.completablefuture;
 
+import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 public class ExceptionallyCase {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
 
         new Thread(() -> {
@@ -29,5 +32,25 @@ public class ExceptionallyCase {
 
         System.out.println(result);
 
+
+        // ----
+
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+            }
+//            if (new Random().nextInt() % 2 >= 0) {
+                int i = 12 / 0;
+//            }
+            System.out.println("run end ...");
+        });
+
+        future.exceptionally(t -> {
+            System.out.println("执行失败！" + t.getMessage());
+            return null;
+        });
+
+        TimeUnit.SECONDS.sleep(2);
     }
 }

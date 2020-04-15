@@ -17,7 +17,7 @@ public class RunAsyncCase {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                int i = 2 / 0; // 异常会被吃掉 -> ExceptionallyCase.java
+                int i = 2 / 0; // 异常会被吃掉,没有输出，并且终止逻辑 -> ExceptionallyCase.java
                 System.out.println("run Async");
             })
             .thenApply((o) -> o + " apply")

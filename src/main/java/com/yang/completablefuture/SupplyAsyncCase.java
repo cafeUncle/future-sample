@@ -18,7 +18,7 @@ public class SupplyAsyncCase {
                 e.printStackTrace();
             }
             return "hello";
-        }).thenApply((res) -> {
+        }).thenApply((res) -> {  // thenApplyAsync
             return res + " world!";
         });
 
@@ -29,7 +29,7 @@ public class SupplyAsyncCase {
 
         System.out.println("join apply结束了！" + completableFuture.get());
 
-        completableFuture.thenAccept((result) -> {
+        completableFuture.thenAccept((result) -> {  // thenApplyAsync
             System.out.println("future accept一下！" + result);
         }).join();
 
