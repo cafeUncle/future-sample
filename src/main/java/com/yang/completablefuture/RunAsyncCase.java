@@ -6,7 +6,7 @@ import java.util.concurrent.CompletableFuture;
  * runAsync 和 supplyAsync 方法的区别是runAsync返回的CompletableFuture是没有返回值的
  * 不过依然可以连消费型的then,即thenAccept,只是入参是null
  */
-public class RunAsyncCASE {
+public class RunAsyncCase {
 
     public static void main(String[] args) {
 
