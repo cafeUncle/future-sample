@@ -14,12 +14,13 @@ public class ExceptionallyCase {
 
         new Thread(() -> {
             try {
-                int i = 1/0;
-            }catch (Exception e) {
+                int i = 1 / 0;
+            } catch (Exception e) {
                 e.printStackTrace();
-                completableFuture.completeExceptionally(e);
-            }finally {
-                completableFuture.complete("ok");
+                completableFuture.completeExceptionally(e); // get 时 输出 异常
+            } finally {
+                // future调用complete(T t)会立即执行。但是complete(T t)只能调用一次，后续的重复调用会失效。
+                completableFuture.complete("ok");  // 指定 get 时 的 返回 结果
             }
         }).start();
 
