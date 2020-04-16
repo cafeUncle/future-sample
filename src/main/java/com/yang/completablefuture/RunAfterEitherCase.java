@@ -2,16 +2,14 @@ package com.yang.completablefuture;
 
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class ApplyToEitherCase {
+public class RunAfterEitherCase {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) {
 
-        // 两个CompletionStage，哪个执行返回的结果快，就用哪个CompletionStage的结果进行下一步的 apply 转化 操作。
+        // 两个CompletionStage，任何一个完成了都会执行下一步的操作（Runnable）
         CompletableFuture<Integer> f1 = CompletableFuture.supplyAsync(new Supplier<Integer>() {
             @Override
             public Integer get() {
@@ -25,6 +23,7 @@ public class ApplyToEitherCase {
                 return t;
             }
         });
+
         CompletableFuture<Integer> f2 = CompletableFuture.supplyAsync(new Supplier<Integer>() {
             @Override
             public Integer get() {
@@ -38,15 +37,12 @@ public class ApplyToEitherCase {
                 return t;
             }
         });
+        f1.runAfterEither(f2, new Runnable() { // runAfterEitherAsync
 
-        CompletableFuture<Integer> result = f1.applyToEither(f2, new Function<Integer, Integer>() {
             @Override
-            public Integer apply(Integer t) {
-                System.out.println(t);
-                return t * 2;
+            public void run() {
+                System.out.println("上面有一个已经完成了。");
             }
         });
-
-        System.out.println(result.get());
     }
 }
