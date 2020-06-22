@@ -37,6 +37,7 @@ public class ExceptionallyCase {
 
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             try {
+                System.out.println("run start ...");
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
             }
@@ -46,10 +47,18 @@ public class ExceptionallyCase {
             System.out.println("run end ...");
         });
 
-        future.exceptionally(t -> {
-            System.out.println("执行失败！" + t.getMessage());
-            return null;
-        });
+
+
+//        try {
+//            Void aVoid = future.get(); // 不调用 get, 就不会向父线程抛出异常。 如果想获取异常，可以用 exceptionally
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
+
+//        future.exceptionally(t -> {
+//            System.out.println("执行失败！" + t.getMessage());
+//            return null;
+//        });
 
         TimeUnit.SECONDS.sleep(2);
     }
